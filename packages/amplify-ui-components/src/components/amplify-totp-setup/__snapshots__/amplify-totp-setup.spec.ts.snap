@@ -4,6 +4,12 @@ exports[`amplify-totp spec: Render logic -> should render a \`less than 2 mfa ty
 <amplify-totp-setup>
   <mock:shadow-root>
     <amplify-form-section headertext="Scan then enter verification code" submitbuttontext="Verify Security Token">
+      <div slot="banner">
+        <slot name="header-banner"></slot>
+      </div>
+      <div slot="subtitle">
+        <slot name="header-subtitle"></slot>
+      </div>
       <div class="totp-setup">
         <amplify-form-field fieldid="totpCode" label="Enter Security Code:" name="totpCode"></amplify-form-field>
       </div>

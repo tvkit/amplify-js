@@ -5,6 +5,12 @@ exports[`amplify-select-mfa-type spec: Render logic -> should render \`TOTP, SMS
   <mock:shadow-root>
     <div>
       <amplify-form-section headertext="Select MFA Type" submitbuttontext="Verify">
+        <div slot="banner">
+          <slot name="header-banner"></slot>
+        </div>
+        <div slot="subtitle">
+          <slot name="header-subtitle"></slot>
+        </div>
         <amplify-radio-button label="SMS" name="MFAType" value="SMS"></amplify-radio-button>
         <amplify-radio-button label="TOTP" name="MFAType" value="TOTP"></amplify-radio-button>
         <amplify-radio-button label="No MFA" name="MFAType" value="NOMFA"></amplify-radio-button>

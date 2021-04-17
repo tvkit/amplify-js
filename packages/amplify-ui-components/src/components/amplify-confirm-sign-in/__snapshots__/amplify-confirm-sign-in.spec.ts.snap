@@ -4,6 +4,12 @@ exports[`amplify-confirm-sign-in spec: Render logic -> should render a \`confirm
 <amplify-confirm-sign-in>
   <mock:shadow-root>
     <amplify-form-section headertext="Confirm SMS Code" submitbuttontext="Confirm">
+      <div slot="banner">
+        <slot name="header-banner"></slot>
+      </div>
+      <div slot="subtitle">
+        <slot name="header-subtitle"></slot>
+      </div>
       <amplify-auth-fields></amplify-auth-fields>
     </amplify-form-section>
   </mock:shadow-root>

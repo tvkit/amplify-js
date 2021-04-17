@@ -219,6 +219,10 @@ export namespace Components {
          */
         "formFields": FormFieldTypes | string[];
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter": (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this components e.g. SignIn -> 'Create Account' link -> SignUp
          */
         "handleAuthStateChange": AuthStateHandler;
@@ -336,6 +340,10 @@ export namespace Components {
           * The form fields displayed inside of the forgot password form
          */
         "formFields": FormFieldTypes | string[];
+        /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter": (formFields: FormFieldTypes) => FormFieldTypes | null;
         /**
           * Auth state change handler for this component
          */
@@ -711,6 +719,10 @@ export namespace Components {
          */
         "formFields": FormFieldTypes;
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter": (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this component
          */
         "handleAuthStateChange": AuthStateHandler;
@@ -973,6 +985,10 @@ export namespace Components {
          */
         "formFields": FormFieldTypes | string[];
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter": (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this component
          */
         "handleAuthStateChange": AuthStateHandler;
@@ -1018,6 +1034,10 @@ export namespace Components {
           * Form fields allows you to utilize our pre-built components such as username field, code field, password field, email field, etc. by passing an array of strings that you would like the order of the form to be in. If you need more customization, such as changing text for a label or adjust a placeholder, you can follow the structure below in order to do just that. ``` [   {     type: string,     label: string,     placeholder: string,     hint: string | Functional Component | null,     required: boolean   } ] ```
          */
         "formFields": FormFieldTypes | string[];
+        /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter": (formFields: FormFieldTypes) => FormFieldTypes | null;
         /**
           * Auth state change handler for this component e.g. SignIn -> 'Create Account' link -> SignUp
          */
@@ -1727,6 +1747,10 @@ declare namespace LocalJSX {
          */
         "formFields"?: FormFieldTypes | string[];
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter"?: (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this components e.g. SignIn -> 'Create Account' link -> SignUp
          */
         "handleAuthStateChange"?: AuthStateHandler;
@@ -1844,6 +1868,10 @@ declare namespace LocalJSX {
           * The form fields displayed inside of the forgot password form
          */
         "formFields"?: FormFieldTypes | string[];
+        /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter"?: (formFields: FormFieldTypes) => FormFieldTypes | null;
         /**
           * Auth state change handler for this component
          */
@@ -2223,6 +2251,10 @@ declare namespace LocalJSX {
          */
         "formFields"?: FormFieldTypes;
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter"?: (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this component
          */
         "handleAuthStateChange"?: AuthStateHandler;
@@ -2485,6 +2517,10 @@ declare namespace LocalJSX {
          */
         "formFields"?: FormFieldTypes | string[];
         /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter"?: (formFields: FormFieldTypes) => FormFieldTypes | null;
+        /**
           * Auth state change handler for this component
          */
         "handleAuthStateChange"?: AuthStateHandler;
@@ -2530,6 +2566,10 @@ declare namespace LocalJSX {
           * Form fields allows you to utilize our pre-built components such as username field, code field, password field, email field, etc. by passing an array of strings that you would like the order of the form to be in. If you need more customization, such as changing text for a label or adjust a placeholder, you can follow the structure below in order to do just that. ``` [   {     type: string,     label: string,     placeholder: string,     hint: string | Functional Component | null,     required: boolean   } ] ```
          */
         "formFields"?: FormFieldTypes | string[];
+        /**
+          * The function called when filtering internal form fields
+         */
+        "formFieldsFilter"?: (formFields: FormFieldTypes) => FormFieldTypes | null;
         /**
           * Auth state change handler for this component e.g. SignIn -> 'Create Account' link -> SignUp
          */
