@@ -34,6 +34,8 @@ import { handleSignIn } from '../../common/auth-helpers';
 export class AmplifySignUp {
   /** Fires when sign up form is submitted */
   @Prop() handleSubmit: (event: Event) => void = event => this.signUp(event);
+  /** The function called when filtering internal form fields */
+  @Prop() formFieldsFilter: (formFields: FormFieldTypes) => FormFieldTypes | null = null;
   /** Engages when invalid actions occur, such as missing field, etc. */
   @Prop() validationErrors: string;
   /** Used for header text in sign up component */
@@ -265,6 +267,14 @@ export class AmplifySignUp {
     }
   }
 
+  private applyFormFieldsFilter(formFields: FormFieldTypes | string[]): FormFieldTypes | string[] {
+    if (!this.formFieldsFilter || !Array.isArray(formFields) || typeof formFields[0] === 'string') {
+      return formFields;
+    }
+    const formFieldTypes = formFields as FormFieldTypes;
+    return this.formFieldsFilter(formFieldTypes.map(field => Object.assign({}, field)));
+  }
+
   private buildFormFields() {
     if (this.formFields.length === 0) {
       this.buildDefaultFormFields();
@@ -278,6 +288,7 @@ export class AmplifySignUp {
       });
       this.newFormFields = newFields;
     }
+    this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
   }
 
   setFieldValue(field: PhoneFormFieldType | FormFieldType, formAttributes: SignUpAttributes) {
@@ -329,6 +340,9 @@ export class AmplifySignUp {
           handleSubmit={this.handleSubmit}
           testDataPrefix={'sign-up'}
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
           <div slot="subtitle">
             <slot name="header-subtitle"></slot>
           </div>

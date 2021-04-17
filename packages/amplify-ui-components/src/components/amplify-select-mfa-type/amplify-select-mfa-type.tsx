@@ -123,6 +123,12 @@ export class AmplifySelectMFAType {
         handleSubmit={event => this.handleSubmit(event)}
         loading={this.loading}
       >
+        <div slot="banner">
+          <slot name="header-banner"></slot>
+        </div>
+        <div slot="subtitle">
+          <slot name="header-subtitle"></slot>
+        </div>
         {SMS ? (
           <amplify-radio-button
             key="sms"

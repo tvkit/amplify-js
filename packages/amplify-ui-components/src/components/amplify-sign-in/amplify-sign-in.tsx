@@ -44,6 +44,8 @@ export class AmplifySignIn {
   @Prop() federated: FederatedConfig;
   /** Auth state change handler for this component */
   @Prop() handleAuthStateChange: AuthStateHandler = dispatchAuthStateChangeEvent;
+  /** The function called when filtering internal form fields */
+  @Prop() formFieldsFilter: (formFields: FormFieldTypes) => FormFieldTypes | null = null;
   /** Username Alias is used to setup authentication with `username`, `email` or `phone_number`  */
   @Prop() usernameAlias: UsernameAliasStrings = 'username';
   /**
@@ -194,6 +196,14 @@ export class AmplifySignIn {
     this.newFormFields = [...formFieldInputs];
   }
 
+  private applyFormFieldsFilter(formFields: FormFieldTypes | string[]): FormFieldTypes | string[] {
+    if (!this.formFieldsFilter || !Array.isArray(formFields) || typeof formFields[0] === 'string') {
+      return formFields;
+    }
+    const formFieldTypes = formFields as FormFieldTypes;
+    return this.formFieldsFilter(formFieldTypes.map(field => Object.assign({}, field)));
+  }
+
   buildFormFields() {
     if (this.formFields.length === 0) {
       this.buildDefaultFormFields();
@@ -224,6 +234,7 @@ export class AmplifySignIn {
       });
       this.newFormFields = newFields;
     }
+    this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
   }
 
   setFieldValue(field: PhoneFormFieldType | FormFieldType, formAttributes: SignInAttributes) {
@@ -260,6 +271,9 @@ export class AmplifySignIn {
           handleSubmit={this.handleSubmit}
           testDataPrefix={'sign-in'}
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
           <div slot="subtitle">
             <slot name="header-subtitle"></slot>
           </div>

@@ -142,6 +142,12 @@ export class AmplifyTOTPSetup {
           handleSubmit={event => this.verifyTotpToken(event)}
           loading={this.loading}
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           <div class="totp-setup">
             {this.qrCodeImageSource && <img src={this.qrCodeImageSource} alt={I18n.get(Translations.QR_CODE_ALT)} />}
             <amplify-form-field

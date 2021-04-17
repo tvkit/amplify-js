@@ -31,6 +31,8 @@ export class AmplifyRequireNewPassword {
   @Prop() handleSubmit: (event: Event) => void = event => this.completeNewPassword(event);
   /** Auth state change handler for this component */
   @Prop() handleAuthStateChange: AuthStateHandler = dispatchAuthStateChangeEvent;
+  /** The function called when filtering internal form fields */
+  @Prop() formFieldsFilter: (formFields: FormFieldTypes) => FormFieldTypes | null = null;
   /** Used for the username to be passed to resend code */
   @Prop() user: CognitoUserInterface;
   /** The form fields displayed inside of the forgot password form */
@@ -63,6 +65,14 @@ export class AmplifyRequireNewPassword {
     this.requiredAttributes[attribute] = event.target.value;
   }
 
+  private applyFormFieldsFilter(formFields: FormFieldTypes): FormFieldTypes {
+    if (!this.formFieldsFilter || !Array.isArray(formFields)) {
+      return formFields;
+    }
+    const formFieldTypes = formFields as FormFieldTypes;
+    return this.formFieldsFilter(formFieldTypes.map(field => Object.assign({}, field)));
+  }
+
   async setCurrentUser(): Promise<void> {
     if (!this.user) {
       // Check for authenticated user
@@ -89,7 +99,7 @@ export class AmplifyRequireNewPassword {
             'data-test': `require-new-password-${attribute}-input`,
           },
         };
-        this.newFormFields = [...this.newFormFields, formField];
+        this.newFormFields = this.applyFormFieldsFilter([...this.newFormFields, formField]);
       });
     }
   }
@@ -148,6 +158,12 @@ export class AmplifyRequireNewPassword {
           }
           submitButtonText={I18n.get(this.submitButtonText)}
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           <amplify-auth-fields formFields={this.newFormFields} />
         </amplify-form-section>
       </Host>

@@ -119,6 +119,12 @@ export class AmplifyConfirmSignIn {
             </span>
           }
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           <amplify-auth-fields formFields={this.formFields} />
         </amplify-form-section>
       </Host>

@@ -171,6 +171,12 @@ export class AmplifyVerifyContact {
               : I18n.get(Translations.VERIFY_CONTACT_VERIFY_LABEL)
           }
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           {this.verifyAttr ? this.renderSubmit() : this.renderVerify()}
         </amplify-form-section>
       </Host>

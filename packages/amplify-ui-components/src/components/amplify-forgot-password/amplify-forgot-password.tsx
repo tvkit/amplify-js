@@ -36,6 +36,8 @@ export class AmplifyForgotPassword {
   @Prop() submitButtonText: string = Translations.SUBMIT;
   /** The form fields displayed inside of the forgot password form */
   @Prop() formFields: FormFieldTypes | string[] = [];
+  /** The function called when filtering internal form fields */
+  @Prop() formFieldsFilter: (formFields: FormFieldTypes) => FormFieldTypes | null = null;
   /** The function called when making a request to reset password */
   @Prop() handleSend: (event: Event) => void = event => this.send(event);
   /** The function called when submitting a new password */
@@ -69,6 +71,14 @@ export class AmplifyForgotPassword {
     this.buildFormFields();
   }
 
+  private applyFormFieldsFilter(formFields: FormFieldTypes | string[]): FormFieldTypes | string[] {
+    if (!this.formFieldsFilter || !Array.isArray(formFields) || typeof formFields[0] === 'string') {
+      return formFields;
+    }
+    const formFieldTypes = formFields as FormFieldTypes;
+    return this.formFieldsFilter(formFieldTypes.map(field => Object.assign({}, field)));
+  }
+
   private buildFormFields() {
     if (this.formFields.length === 0) {
       this.buildDefaultFormFields();
@@ -79,6 +89,7 @@ export class AmplifyForgotPassword {
         this.newFormFields.push(newField);
       });
     }
+    this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
   }
 
   private buildDefaultFormFields() {
@@ -216,6 +227,7 @@ export class AmplifyForgotPassword {
           placeholder: I18n.get(Translations.NEW_PASSWORD_PLACEHOLDER),
         },
       ];
+      this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
       this.delivery = data.CodeDeliveryDetails;
     } catch (error) {
       dispatchToastHubEvent(error);
@@ -266,6 +278,12 @@ export class AmplifyForgotPassword {
           testDataPrefix={'forgot-password'}
           submitButtonText={I18n.get(submitButtonText)}
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           <amplify-auth-fields formFields={this.newFormFields} />
         </amplify-form-section>
       </Host>

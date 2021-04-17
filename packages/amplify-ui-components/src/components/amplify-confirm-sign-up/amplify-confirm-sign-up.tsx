@@ -55,6 +55,8 @@ export class AmplifyConfirmSignUp {
    * ```
    */
   @Prop() formFields: FormFieldTypes | string[] = [];
+  /** The function called when filtering internal form fields */
+  @Prop() formFieldsFilter: (formFields: FormFieldTypes) => FormFieldTypes | null = null;
   /** Auth state change handler for this components
    * e.g. SignIn -> 'Create Account' link -> SignUp
    */
@@ -95,6 +97,14 @@ export class AmplifyConfirmSignUp {
     this._signUpAttrs = this.user && this.user.signUpAttrs;
     checkUsernameAlias(this.usernameAlias);
     this.buildFormFields();
+  }
+
+  private applyFormFieldsFilter(formFields: FormFieldTypes | string[]): FormFieldTypes | string[] {
+    if (!this.formFieldsFilter || !Array.isArray(formFields) || typeof formFields[0] === 'string') {
+      return formFields;
+    }
+    const formFieldTypes = formFields as FormFieldTypes;
+    return this.formFieldsFilter(formFieldTypes.map(field => Object.assign({}, field)));
   }
 
   private buildDefaultFormFields() {
@@ -148,6 +158,7 @@ export class AmplifyConfirmSignUp {
       });
       this.newFormFields = newFields;
     }
+    this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
   }
 
   private handleFormFieldInputChange(fieldType) {
@@ -271,6 +282,12 @@ export class AmplifyConfirmSignUp {
             </div>
           }
         >
+          <div slot="banner">
+            <slot name="header-banner"></slot>
+          </div>
+          <div slot="subtitle">
+            <slot name="header-subtitle"></slot>
+          </div>
           <amplify-auth-fields formFields={this.newFormFields} />
         </amplify-form-section>
       </Host>
