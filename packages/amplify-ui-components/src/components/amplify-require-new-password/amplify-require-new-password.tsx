@@ -99,9 +99,10 @@ export class AmplifyRequireNewPassword {
             'data-test': `require-new-password-${attribute}-input`,
           },
         };
-        this.newFormFields = this.applyFormFieldsFilter([...this.newFormFields, formField]);
+        this.newFormFields = [...this.newFormFields, formField];
       });
     }
+    this.newFormFields = this.applyFormFieldsFilter(this.newFormFields);
   }
 
   componentWillLoad() {
